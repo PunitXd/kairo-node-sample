@@ -7,7 +7,7 @@ metadata:
     app: kairo-node-sample
     app.kubernetes.io/managed-by: kairo
   annotations:
-    kairo.dev/pipeline-run-id: "cmwazpwut0001sahxvysmnvq1"
+    kairo.dev/pipeline-run-id: "cmwazt3590001sae1uyijvyl5"
 spec:
   replicas: 1
   # rollback needs old ReplicaSets to still be around
