@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kairo-node-sample
+  namespace: kairo-kairo-node-sample
+  labels:
+    app: kairo-node-sample
+    app.kubernetes.io/managed-by: kairo
+  annotations:
+    kairo.dev/pipeline-run-id: "cmwazpwut0001sahxvysmnvq1"
+spec:
+  replicas: 1
+  # rollback needs old ReplicaSets to still be around
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: kairo-node-sample
+  template:
+    metadata:
+      labels:
+        app: kairo-node-sample
+        app.kubernetes.io/managed-by: kairo
+    spec:
+      containers:
+        - name: kairo-node-sample
+          image: kairo/kairo-node-sample:2c7e8d5d36e22ae7a49155b3631b14babab2a05d
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          # liveness + memory limit are what make self-healing possible.
+          # don't remove them without talking to BE 2
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
