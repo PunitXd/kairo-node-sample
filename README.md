@@ -21,3 +21,5 @@ For the demo this folder is pushed as its own public GitHub repo, because Kairo 
 
 Rollout test 1.
 Rollout test 2.
+
+Deployed and healed by Kairo.
